@@ -1,10 +1,14 @@
+#include "config.h"
 #include "FastSPI_LED2.h"
 
-#define NUM_LEDS 150
 struct CRGB { byte g; byte r; byte b; };
 struct CRGB leds[NUM_LEDS];
 TM1809Controller800Mhz<6> LED;
 
+/**
+ *  Setup method
+ *  Initialize arduino
+ */
 void setup() {
 	LED.init();
 	memset(leds, 255, NUM_LEDS * sizeof(struct CRGB));
@@ -12,6 +16,9 @@ void setup() {
 	delay(20);
 }
 
+/**
+ *  Main loop
+ */
 void loop() {
 	for(int i = 0; i < 3; i++) {
 		for(int iLed = 0; iLed < NUM_LEDS; iLed++) {
