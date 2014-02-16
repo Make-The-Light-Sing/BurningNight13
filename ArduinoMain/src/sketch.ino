@@ -1,6 +1,7 @@
 #include "FastSPI_LED2.h"
 #include "config.h"
 #include "Color.h"
+#include "Effect/Effect.h"
 
 CRGB leds[NUM_LEDS];
 TM1809Controller800Mhz<PIN_STRIP> LED;
@@ -31,7 +32,14 @@ void loop() {
 			memset(leds, 0x00, NUM_LEDS * sizeof(CRGB));
 		}
 	} */
-	wave();
+	//wave();
+	CRGB Red = {0xff, 0xff, 0x00};
+	ColorChaseEffect effect = ColorChaseEffect(leds, Red);
+	while(true) {
+		effect.step();
+		LED.showRGB((byte*)leds, NUM_LEDS);
+		effect.after_step();
+	}
 }
 
 
