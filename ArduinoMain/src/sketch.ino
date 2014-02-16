@@ -46,37 +46,46 @@ void wave()
     {
         for(int iLed = 0; iLed < NUM_LEDS; iLed++)
         {
+        	// y is evolving from 0 to (4 x Cycle)
             y = (iLed + j) & 0x1f;
             if (y >= (2 * cycle))
             {
-                if (y >= (3 * cycle))
+                if (y >= (3 * cycle)) // y in 4th cycle
                 {
-                    r = 255 * ((4 * cycle) - y) / cycle;
-                    g = 255 * ((4 * cycle) - y) / cycle;
-                    b = 255 * ((4 * cycle) - y) / cycle;
+                    leds[iLed] = (CRGB) {
+                    	0xff >> (y - 24),
+                    	0xff >> (y - 24),
+                    	0xff >> (y - 24)
+                    };
                 }
-                else
+                else				// y in 3rd cycle
                 {
-                    r = 255 * (y - (2 * cycle)) / cycle;
-                    g = 255 * (y - (2 * cycle)) / cycle;
-                    b = 255 * (y - (2 * cycle)) / cycle;
+                    leds[iLed] = (CRGB) {
+                    	0xff >> (24 - y),
+                    	0xff >> (24 - y),
+                    	0xff >> (24 - y)
+                    };
                 }
             } else {
-                if (y >= cycle)
+                if (y >= cycle)		// y in 2nd cycle
                 {
-                    r = color.r * ((2 * cycle) - y) / cycle;
-                    g = color.g * ((2 * cycle) - y) / cycle;
-                    b = color.b * ((2 * cycle) - y) / cycle;
+                    leds[iLed] = (CRGB) {
+                    	color.b >> (y - 8),
+                      	color.r >> (y - 8),
+                       	color.g >> (y - 8),
+                    };
                 }
-                else
+                else				// y in 1st cycle
                 {
-                    r = color.r * y / cycle;
-                    g = color.g * y / cycle;
-                    b = color.b * y / cycle;
+                    leds[iLed] = (CRGB) {
+                    	color.b >> (8 - y),
+                      	color.r >> (8 - y),
+                       	color.g >> (8 - y),
+                    };
                 }
             }
-            leds[iLed] = (CRGB) {b, r, g};
         }
+        //delay(100);
         LED.showRGB((byte*)leds, NUM_LEDS);
     }
 }    // function wave
