@@ -3,7 +3,7 @@
 #include "Color.h"
 
 CRGB leds[NUM_LEDS];
-TM1809Controller800Mhz<6> LED;
+TM1809Controller800Mhz<PIN_STRIP> LED;
 
 /**
  *  Setup method
