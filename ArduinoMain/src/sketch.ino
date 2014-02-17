@@ -27,7 +27,7 @@ void loop() {
 		effect1.step();
 		effect2.step();
 		LED.showRGB((byte*)leds, NUM_LEDS);
-		effect1.after_step();
-		effect2.after_step();
+		effect1.loop();
+		effect2.loop();
 	}
 }
