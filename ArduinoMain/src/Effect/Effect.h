@@ -3,6 +3,10 @@
 
 #include "../Color.h"
 
+#define EFFECT_COLOR_CHASE 1
+#define EFFECT_WAVE        2
+#define EFFECT_PULSE       3
+
 class Effect
 {
 	public :
