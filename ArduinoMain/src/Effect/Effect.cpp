@@ -36,36 +36,36 @@ void WaveEffect::step() {
 		{
 			if (y >= (3 * cycle)) // y in 4th cycle
 			{
-				leds[iLed] = (CRGB) {
+				leds[iLed].color(
 					0xff >> (y - 24),
 					0xff >> (y - 24),
 					0xff >> (y - 24)
-				};
+				);
 			}
 			else				// y in 3rd cycle
 			{
-				leds[iLed] = (CRGB) {
+				leds[iLed].color(
 					0xff >> (24 - y),
 					0xff >> (24 - y),
 					0xff >> (24 - y)
-				};
+				);
 			}
 		} else {
 			if (y >= cycle)		// y in 2nd cycle
 			{
-				leds[iLed] = (CRGB) {
-					color.b >> (y - 8),
+				leds[iLed].color(
 					color.r >> (y - 8),
 					color.g >> (y - 8),
-				};
+					color.b >> (y - 8)
+				);
 			}
 			else				// y in 1st cycle
 			{
-				leds[iLed] = (CRGB) {
-					color.b >> (8 - y),
+				leds[iLed].color(
 					color.r >> (8 - y),
 					color.g >> (8 - y),
-				};
+					color.b >> (8 - y)
+				);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ void WaveEffect::step() {
 
 void PulseEffect::step()
 {
-	int delta = step_index >> 2;
+	int delta = ((step_index > 64) ? (128 - step_index) : step_index) >> 3;
 	for(int iLed = 0; iLed < strip_length; iLed++)
 	{
 		leds[iLed].color(
@@ -87,7 +87,7 @@ void PulseEffect::step()
 		);
 	}
 	step_index ++;
-	if (step_index >= 32) {
+	if (step_index >= 128) {
 		step_index = 0;
 	}
 }
