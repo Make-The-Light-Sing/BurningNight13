@@ -17,6 +17,11 @@ typedef struct CRGB {
 		b = c & 0xff;
 		return c;
 	}
+	void color(byte n_r, byte n_g, byte n_b) {
+		r = n_r;
+		g = n_g;
+		b = n_b;
+	}
 };
 
 const CRGB CBlack   = {0x00, 0x00, 0x00};
