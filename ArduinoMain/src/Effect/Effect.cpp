@@ -74,3 +74,20 @@ void WaveEffect::step() {
 		step_index = 0;
 	}
 }
+
+void PulseEffect::step()
+{
+	int delta = step_index >> 2;
+	for(int iLed = 0; iLed < strip_length; iLed++)
+	{
+		leds[iLed].color(
+			color.r >> delta,
+			color.g >> delta,
+			color.b >> delta
+		);
+	}
+	step_index ++;
+	if (step_index >= 32) {
+		step_index = 0;
+	}
+}

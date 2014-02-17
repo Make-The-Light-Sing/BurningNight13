@@ -35,4 +35,12 @@ class WaveEffect : public Effect {
 };
 
 
+class PulseEffect : public Effect {
+	public:
+		PulseEffect(CRGB *leds, uint16_t length, CRGB color) : Effect(leds, length), color(color) {}
+		void step();
+	private:
+		CRGB color;
+};
+
 #endif

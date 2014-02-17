@@ -21,10 +21,8 @@ void setup() {
  *  Main loop
  */
 void loop() {
-	CRGB c;
-	c.color(0xff, 0x00, 0x00);
-	ColorChaseEffect effect1 = ColorChaseEffect(leds, 50, CGreen);
-	WaveEffect       effect2 = WaveEffect(leds + 50, 100, c);
+	PulseEffect      effect1 = PulseEffect(leds, 50, CBlue);
+	WaveEffect       effect2 = WaveEffect(leds + 50, 100, CRed);
 	while(true) {
 		effect1.step();
 		effect2.step();
