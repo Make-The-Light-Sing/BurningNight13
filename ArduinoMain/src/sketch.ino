@@ -23,8 +23,8 @@ void setup() {
 void loop() {
 	CRGB Red;
 	Red = 0xff0000;
-	//ColorChaseEffect effect = ColorChaseEffect(leds, Red);
-	WaveEffect effect = WaveEffect(leds, Red);
+	//ColorChaseEffect effect = ColorChaseEffect(leds, NUM_LEDS, Red);
+	WaveEffect effect = WaveEffect(leds, NUM_LEDS, Red);
 	while(true) {
 		effect.step();
 		LED.showRGB((byte*)leds, NUM_LEDS);
