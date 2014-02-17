@@ -21,13 +21,16 @@ void setup() {
  *  Main loop
  */
 void loop() {
-	PulseEffect      effect1 = PulseEffect(leds, 50, CBlue);
-	WaveEffect       effect2 = WaveEffect(leds + 50, 100, CRed);
+	PulseEffect      effect1 = PulseEffect(leds, 25, CBlue);
+	WaveEffect       effect2 = WaveEffect(leds + 25, 100, CRed);
+	ColorChaseEffect effect3 = ColorChaseEffect(leds + 125, 25, CGreen);
 	while(true) {
-		effect1.step();
-		effect2.step();
+		effect1.preStep();
+		effect2.preStep();
+		effect3.preStep();
 		LED.showRGB((byte*)leds, NUM_LEDS);
-		effect1.loop();
-		effect2.loop();
+		effect1.postStep();
+		effect2.postStep();
+		effect3.postStep();
 	}
 }

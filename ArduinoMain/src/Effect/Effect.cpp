@@ -1,13 +1,23 @@
 #include "Effect.h"
 
 /**
- * End of loop
+ * Start of step
  */
-void Effect::loop() {
-	after_step();
+void Effect::preStep()
+{
+	_preStep();
+}
+
+
+/**
+ * End of step
+ */
+void Effect::postStep() {
+	_postStep();
 	step_index ++;
 	if (step_index >= step_loop) {
 		step_index = 0;
+		_endLoop();
 	}
 }
 
@@ -15,7 +25,7 @@ void Effect::loop() {
  * Color chase effect stepper, light up the next pixel
  * @return void
  */
-void ColorChaseEffect::step()
+void ColorChaseEffect::_preStep()
 {
 	leds[step_index] = color; // red
 }
@@ -24,7 +34,7 @@ void ColorChaseEffect::step()
  * Color chase effect after step, fill dark all pixels
  * @return void
  */
-void ColorChaseEffect::after_step() {
+void ColorChaseEffect::_postStep() {
 	memset(leds, 0x00, strip_length * sizeof(CRGB));
 }
 
@@ -32,7 +42,7 @@ void ColorChaseEffect::after_step() {
  * Wave effect stepper
  * @return void
  */
-void WaveEffect::step() {
+void WaveEffect::_preStep() {
 	byte y;
 	for(int iLed = 0; iLed < strip_length; iLed++)
 	{
@@ -61,7 +71,7 @@ void WaveEffect::step() {
 	}
 }
 
-void PulseEffect::step()
+void PulseEffect::_preStep()
 {
 	int delta = ((step_index > 64) ? (128 - step_index) : step_index) >> 3;
 	for(int iLed = 0; iLed < strip_length; iLed++)
