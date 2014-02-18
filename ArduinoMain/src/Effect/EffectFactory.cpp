@@ -24,5 +24,9 @@ Effect* EffectFactory::createEffect(T_Effect_Config *config) {
 			return new PulseEffect(config);
 			break;
 		}
+		case Rainbow : {
+			return new RainbowEffect(config);
+			break;
+		}
 	}
 }

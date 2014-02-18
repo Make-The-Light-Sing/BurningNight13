@@ -15,6 +15,7 @@
 #include "PulseEffect.h"
 #include "WaveEffect.h"
 #include "ColorChaseEffect.h"
+#include "RainbowEffect.h"
 
 //=================================
 // the actual class
