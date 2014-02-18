@@ -30,17 +30,17 @@ typedef struct T_Effect_Config {
 	boolean      reverse;		// if true, effect direction is reversed
 };
 
-
 class Effect
 {
 	public :
+		Effect() {};
 		Effect(CRGB *leds, uint16_t length) : leds(leds), strip_length(length), step_loop(length) {};
 		Effect(T_Effect_Config *config) : config(config), leds(config->leds), strip_length(config->length), step_loop(config->length) {};
 		void preStep();
 		void postStep();
 	protected :
-		virtual void _preStep() {};
-		virtual void _postStep() {};
+		virtual void _preStep() { leds[step_index] = CWhite; };
+		virtual void _postStep() { memset(leds, 0x00, strip_length * sizeof(CRGB)); };
 		virtual void _endLoop() {};
 
 		T_Effect_Config *config;
@@ -82,6 +82,12 @@ class PulseEffect : public Effect {
 		void _preStep();
 	private:
 		CRGB color;
+};
+
+class EffectFactory
+{
+	public:
+    	Effect* createEffect(T_Effect_Config *config);
 };
 
 #endif

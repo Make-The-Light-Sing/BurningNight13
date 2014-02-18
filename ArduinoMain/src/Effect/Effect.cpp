@@ -71,11 +71,33 @@ void WaveEffect::_preStep() {
 	}
 }
 
+
 void PulseEffect::_preStep()
 {
 	int delta = ((step_index > 64) ? (128 - step_index) : step_index) >> 3;
 	for(int iLed = 0; iLed < strip_length; iLed++)
 	{
 		leds[iLed].color(color.r >> delta, color.g >> delta, color.b >> delta);
+	}
+}
+
+/**
+ * Effect factory from config struct
+ * @return Effect* Pointer to the new builded effect object
+ */
+Effect* EffectFactory::createEffect(T_Effect_Config *config) {
+	switch(config->effect) {
+		case Color_Chase : {
+			return new ColorChaseEffect(config);
+			break;
+		}
+		case Wave : {
+			return new WaveEffect(config);
+			break;
+		}
+		case Pulse : {
+			return new PulseEffect(config);
+			break;
+		}
 	}
 }

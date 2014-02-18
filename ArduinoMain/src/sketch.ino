@@ -3,32 +3,38 @@
 #include "Effect/Effect.h"
 #include "Color.h"
 
+Effect *effect[NB_SEGMENT];
 
 /**
  *  Setup method
  *  Initialize arduino
  */
 void setup() {
+	EffectFactory factory;
+
 	LED.init();
 	memset(leds, 0x00, NUM_LEDS * sizeof(CRGB));
 	LED.showRGB((byte*)leds, NUM_LEDS);
 	delay(20);
+
+	for(int i; i < NB_SEGMENT; i++) {
+		effect[i] = factory.createEffect(&config[i]);
+	}
 }
 
 /**
  *  Main loop
  */
-void loop() {
-	PulseEffect      effect1 = PulseEffect(&config[2]);
-	WaveEffect       effect2 = WaveEffect(&config[0]);
-	ColorChaseEffect effect3 = ColorChaseEffect(&config[1]);
-	while(true) {
-		effect1.preStep();
-		effect2.preStep();
-		effect3.preStep();
-		LED.showRGB((byte*)leds, NUM_LEDS);
-		effect1.postStep();
-		effect2.postStep();
-		effect3.postStep();
+void loop()
+{
+	// Prepare leds
+	for(int i; i < NB_SEGMENT; i++) {
+		effect[i]->preStep();
+	}
+	// update ledstrip
+	LED.showRGB((byte*)leds, NUM_LEDS);
+	// Make some post traetment like reinitialisation before next step
+	for(int i; i < NB_SEGMENT; i++) {
+		effect[i]->postStep();
 	}
 }
