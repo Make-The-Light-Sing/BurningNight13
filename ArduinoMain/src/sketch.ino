@@ -1,18 +1,8 @@
 #include "FastSPI_LED2.h"
 #include "Config.h"
-#include "Color.h"
 #include "Effect/Effect.h"
+#include "Color.h"
 
-CRGB leds[NUM_LEDS];
-TM1809Controller800Mhz<PIN_STRIP> LED;
-
-
-
-T_Effect_Config config[3] = {
-		{ Wave, leds, 50, CRed },
-		{ Color_Chase, leds + 50, 25, CMagenta },
-		{ Pulse, leds + 75, 75, CGreen }
-};
 
 /**
  *  Setup method
