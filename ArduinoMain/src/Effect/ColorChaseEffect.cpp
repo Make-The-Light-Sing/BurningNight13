@@ -14,14 +14,19 @@
  */
 void ColorChaseEffect::_preStep()
 {
-	config->leds[step_index] = config->color; // red
+	if (config->reverse) {
+		config->leds[config->length - step_index] = config->color;
+	} else {
+		config->leds[step_index] = config->color;
+	}
 }
 
 /**
  * Color chase effect after step, fill dark all pixels
  * @return void
  */
-void ColorChaseEffect::_postStep() {
+void ColorChaseEffect::_postStep()
+{
 	memset(config->leds, 0x00, config->length * sizeof(CRGB));
 }
 
