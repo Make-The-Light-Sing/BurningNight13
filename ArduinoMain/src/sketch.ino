@@ -6,6 +6,14 @@
 CRGB leds[NUM_LEDS];
 TM1809Controller800Mhz<PIN_STRIP> LED;
 
+
+
+T_Effect_Config config[3] = {
+		{ Wave, leds, 50, CRed },
+		{ Color_Chase, leds + 50, 25, CMagenta },
+		{ Pulse, leds + 75, 75, CGreen }
+};
+
 /**
  *  Setup method
  *  Initialize arduino
@@ -21,9 +29,9 @@ void setup() {
  *  Main loop
  */
 void loop() {
-	PulseEffect      effect1 = PulseEffect(leds, 25, CBlue);
-	WaveEffect       effect2 = WaveEffect(leds + 25, 100, CRed);
-	ColorChaseEffect effect3 = ColorChaseEffect(leds + 125, 25, CGreen);
+	PulseEffect      effect1 = PulseEffect(&config[2]);
+	WaveEffect       effect2 = WaveEffect(&config[0]);
+	ColorChaseEffect effect3 = ColorChaseEffect(&config[1]);
 	while(true) {
 		effect1.preStep();
 		effect2.preStep();
