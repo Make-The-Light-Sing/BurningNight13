@@ -7,7 +7,19 @@
 
 #include "FireEffect.h"
 
+/**
+ * Constructor
+ */
+FireEffect::FireEffect(T_Effect_Config *config)
+		: Effect(config)
+{
+	fire = (byte *) malloc(config->length);
+	memset(fire, 0, config->length);
+};
 
+/**
+ * Step for fire effect
+ */
 void FireEffect::_preStep()
 {
     //byte fire[FOOT_NB_STRIP][FOOT_STRIP_LENGTH];

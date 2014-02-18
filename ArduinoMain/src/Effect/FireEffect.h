@@ -18,10 +18,7 @@
 // the actual class
 class FireEffect : public Effect {
 public:
-	FireEffect(T_Effect_Config *config) : Effect(config) {
-		fire = (byte *) malloc(config->length);
-		memset(fire, 0, config->length);
-	};
+	FireEffect(T_Effect_Config *config);
 protected:
 	void _preStep();
 private:
