@@ -20,6 +20,7 @@ void setup() {
 	for(int i; i < NB_SEGMENT; i++) {
 		effect[i] = factory.createEffect(&config[i]);
 	}
+	config[0].color.Wheel(32);
 }
 
 /**
