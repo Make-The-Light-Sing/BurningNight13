@@ -7,7 +7,6 @@
 /**
  * Fire color palete stored in Flash Memory to optiomize SRAM capabilities
  */
-//PROGMEM prog_uchar
 PROGMEM const unsigned char fireColorPalette[] = {
     0,0,0,0,4,0,0,8,0,0,12,0,0,16,1,0,20,1,0,24,1,0,28,2,
     0,32,2,0,36,3,0,40,3,0,44,4,0,48,5,0,52,5,0,56,6,0,60,7,
@@ -29,12 +28,16 @@ PROGMEM const unsigned char fireColorPalette[] = {
 };
 
 /**
- * Color structure
+ * Color structure with different helper method to easly set color by different ways
  */
-typedef struct CRGB {
+typedef struct CRGB
+{
+	// Byte order can not be changed as it is the order it will be sent to the LED strip,
+	// The controller is plugged with this order Blue, Red, Green (chinese stuff..)
 	byte b;
 	byte r;
 	byte g;
+
 	// Inline operator to set all colors with an RGB word
 	inline uint32_t operator= (uint32_t c) {
 		r = (c >> 16) & 0xff;
@@ -42,11 +45,15 @@ typedef struct CRGB {
 		b = c & 0xff;
 		return c;
 	}
+
+	// Method to define colors in the usual order : Red, Green, Blue
 	void color(byte n_r, byte n_g, byte n_b) {
 		r = n_r;
 		g = n_g;
 		b = n_b;
 	}
+
+	// Method to fix color by a wheel position from 0 to 384
 	uint16_t Wheel(uint16_t WheelPos)
 	{
 	    switch(WheelPos / 128)
@@ -69,6 +76,8 @@ typedef struct CRGB {
 	    }
 	    return WheelPos;
 	}
+
+	// Method to define color from the Fire palette defined upper, and stored directly in Flash Memory
 	byte fireColor(byte x)
 	{
 	    if (x > 128) x = 128;
@@ -79,6 +88,7 @@ typedef struct CRGB {
 	}
 };
 
+// Some predefined colors, usefull for testing
 const CRGB CBlack   = {0x00, 0x00, 0x00};
 const CRGB CWhite   = {0xff, 0xff, 0xff};
 const CRGB CRed     = {0x00, 0xff, 0x00};
