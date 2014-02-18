@@ -20,6 +20,10 @@ void FireEffect::_preStep()
 	}
 	for(int iLed=0; iLed < config->length; iLed++)
 	{
-		config->leds[iLed].fireColor(fire[iLed]);
+		if (config->reverse) {
+			config->leds[config->length - iLed].fireColor(fire[iLed]);
+		} else {
+			config->leds[iLed].fireColor(fire[iLed]);
+		}
 	}
 }
