@@ -15,6 +15,10 @@ void RainbowEffect::_preStep()
 		// wheel (thats the i / strip.numPixels() part)
 		// Then add in j which makes the colors go around per pixel
 		// the % 384 is to make the wheel cycle around
-		config->leds[iLed].Wheel(((iLed * 384 / config->length) + step_index) % 384);
+		if (config->reverse) {
+			config->leds[iLed].Wheel(((iLed * 384 / config->length) + step_index) % 384);
+		} else {
+			config->leds[config->length - iLed].Wheel(((iLed * 384 / config->length) + step_index) % 384);
+		}
 	}
 }
