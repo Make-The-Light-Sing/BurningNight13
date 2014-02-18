@@ -47,35 +47,4 @@ class Effect
 		uint16_t         step_index   = 0;
 };
 
-
-class ColorChaseEffect : public Effect {
-	public :
-		ColorChaseEffect(T_Effect_Config *config) : Effect(config) {};
-	protected:
-		void _preStep();
-		void _postStep();
-};
-
-
-class WaveEffect : public Effect {
-	public:
-		WaveEffect(T_Effect_Config *config) : Effect(config) { step_loop = 32; };
-	protected:
-		void _preStep();
-};
-
-
-class PulseEffect : public Effect {
-	public:
-		PulseEffect(T_Effect_Config *config) : Effect(config) { step_loop = 128; };
-	protected:
-		void _preStep();
-};
-
-class EffectFactory
-{
-	public:
-    	Effect* createEffect(T_Effect_Config *config);
-};
-
 #endif

@@ -1,6 +1,6 @@
 #include "FastSPI_LED2.h"
 #include "Config.h"
-#include "Effect/Effect.h"
+#include "Effect/EffectFactory.h"
 #include "Color.h"
 
 Effect *effect[NB_SEGMENT];
