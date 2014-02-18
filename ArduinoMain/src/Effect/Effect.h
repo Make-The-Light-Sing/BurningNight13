@@ -10,6 +10,7 @@
 #define EFFECT_WAVE        2
 #define EFFECT_PULSE       3
 #define EFFECT_RAINBOW     4
+#define EFFECT_FIRE        5
 
 /**
  * Define the type of effect enum list
@@ -18,7 +19,8 @@ typedef enum E_Effect {
 	Color_Chase = EFFECT_COLOR_CHASE,
 	Wave        = EFFECT_WAVE,
 	Pulse       = EFFECT_PULSE,
-	Rainbow     = EFFECT_RAINBOW
+	Rainbow     = EFFECT_RAINBOW,
+	Fire        = EFFECT_FIRE
 };
 
 /**

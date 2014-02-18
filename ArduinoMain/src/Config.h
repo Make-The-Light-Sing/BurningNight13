@@ -19,7 +19,7 @@ TM1809Controller800Mhz<PIN_STRIP> LED;
  * - reverse or not
  */
 T_Effect_Config config[NB_SEGMENT] = {
-	{ Rainbow,     leds,       50, CRed,     false },
+	{ Fire,        leds,       50, CRed,     false },
 	{ Color_Chase, leds + 50,  25, CMagenta, false },
 	{ Pulse,       leds + 75,  25, CGreen,   false },
 	{ Wave,        leds + 100, 50, CBlue,    false }

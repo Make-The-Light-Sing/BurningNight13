@@ -28,5 +28,9 @@ Effect* EffectFactory::createEffect(T_Effect_Config *config) {
 			return new RainbowEffect(config);
 			break;
 		}
+		case Fire : {
+			return new FireEffect(config);
+			break;
+		}
 	}
 }
