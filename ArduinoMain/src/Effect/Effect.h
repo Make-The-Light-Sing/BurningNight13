@@ -3,24 +3,31 @@
 
 #include "../Color.h"
 
-
-#define EFFECT_UNDEFINED   0
+/**
+ * Define different type of effects
+ */
 #define EFFECT_COLOR_CHASE 1
 #define EFFECT_WAVE        2
 #define EFFECT_PULSE       3
 
+/**
+ * Define the type of effect enum list
+ */
 typedef enum E_Effect {
-	Undefined   = EFFECT_UNDEFINED,
 	Color_Chase = EFFECT_COLOR_CHASE,
 	Wave        = EFFECT_WAVE,
 	Pulse       = EFFECT_PULSE
 };
 
+/**
+ * Define the effect configuration structure
+ */
 typedef struct T_Effect_Config {
 	E_Effect     effect;
 	CRGB*        leds;
 	uint16_t     length;
 	CRGB         color;
+	boolean      reverse;		// if true, effect direction is reversed
 };
 
 
