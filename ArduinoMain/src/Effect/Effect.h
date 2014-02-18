@@ -34,54 +34,42 @@ class Effect
 {
 	public :
 		Effect() {};
-		Effect(CRGB *leds, uint16_t length) : leds(leds), strip_length(length), step_loop(length) {};
-		Effect(T_Effect_Config *config) : config(config), leds(config->leds), strip_length(config->length), step_loop(config->length) {};
+		Effect(T_Effect_Config *config) : config(config), step_loop(config->length) {};
 		void preStep();
 		void postStep();
 	protected :
-		virtual void _preStep() { leds[step_index] = CWhite; };
-		virtual void _postStep() { memset(leds, 0x00, strip_length * sizeof(CRGB)); };
+		virtual void _preStep() { config->leds[step_index] = CWhite; };
+		virtual void _postStep() { memset(config->leds, 0x00, config->length * sizeof(CRGB)); };
 		virtual void _endLoop() {};
 
 		T_Effect_Config *config;
 		uint16_t         step_loop    = 0;
 		uint16_t         step_index   = 0;
-		uint16_t         strip_length = 0;
-		CRGB            *leds;
 };
 
 
 class ColorChaseEffect : public Effect {
 	public :
-		ColorChaseEffect(CRGB *leds, uint16_t length, CRGB color) : Effect(leds, length), color(color) {};
-		ColorChaseEffect(T_Effect_Config *config) : Effect(config), color(config->color) {};
+		ColorChaseEffect(T_Effect_Config *config) : Effect(config) {};
 	protected:
 		void _preStep();
 		void _postStep();
-	private:
-		CRGB color;
 };
 
 
 class WaveEffect : public Effect {
 	public:
-		WaveEffect(CRGB *leds, uint16_t length, CRGB color) : Effect(leds, length), color(color) { step_loop = 32; }
-		WaveEffect(T_Effect_Config *config) : Effect(config), color(config->color) { step_loop = 32; };
+		WaveEffect(T_Effect_Config *config) : Effect(config) { step_loop = 32; };
 	protected:
 		void _preStep();
-	private:
-		CRGB color;
 };
 
 
 class PulseEffect : public Effect {
 	public:
-		PulseEffect(CRGB *leds, uint16_t length, CRGB color) : Effect(leds, length), color(color) { step_loop = 128; }
-		PulseEffect(T_Effect_Config *config) : Effect(config), color(config->color) { step_loop = 128; };
+		PulseEffect(T_Effect_Config *config) : Effect(config) { step_loop = 128; };
 	protected:
 		void _preStep();
-	private:
-		CRGB color;
 };
 
 class EffectFactory

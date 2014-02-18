@@ -27,7 +27,7 @@ void Effect::postStep() {
  */
 void ColorChaseEffect::_preStep()
 {
-	leds[step_index] = color; // red
+	config->leds[step_index] = config->color; // red
 }
 
 /**
@@ -35,7 +35,7 @@ void ColorChaseEffect::_preStep()
  * @return void
  */
 void ColorChaseEffect::_postStep() {
-	memset(leds, 0x00, strip_length * sizeof(CRGB));
+	memset(config->leds, 0x00, config->length * sizeof(CRGB));
 }
 
 /**
@@ -44,7 +44,7 @@ void ColorChaseEffect::_postStep() {
  */
 void WaveEffect::_preStep() {
 	byte y;
-	for(int iLed = 0; iLed < strip_length; iLed++)
+	for(int iLed = 0; iLed < config->length; iLed++)
 	{
 		// y is evolving from 0 to 31
 		y = (iLed + step_index) & 0x1f;
@@ -52,20 +52,20 @@ void WaveEffect::_preStep() {
 		{
 			if (y >= 24) // y in 4th cycle
 			{
-				leds[iLed].color(0xff >> (y - 24), 0xff >> (y - 24), 0xff >> (y - 24));
+				config->leds[iLed].color(0xff >> (y - 24), 0xff >> (y - 24), 0xff >> (y - 24));
 			}
 			else				// y in 3rd cycle
 			{
-				leds[iLed].color(0xff >> (24 - y), 0xff >> (24 - y), 0xff >> (24 - y));
+				config->leds[iLed].color(0xff >> (24 - y), 0xff >> (24 - y), 0xff >> (24 - y));
 			}
 		} else {
 			if (y >= 8)		// y in 2nd cycle
 			{
-				leds[iLed].color(color.r >> (y - 8), color.g >> (y - 8), color.b >> (y - 8));
+				config->leds[iLed].color(config->color.r >> (y - 8), config->color.g >> (y - 8), config->color.b >> (y - 8));
 			}
 			else				// y in 1st cycle
 			{
-				leds[iLed].color(color.r >> (8 - y), color.g >> (8 - y), color.b >> (8 - y));
+				config->leds[iLed].color(config->color.r >> (8 - y), config->color.g >> (8 - y), config->color.b >> (8 - y));
 			}
 		}
 	}
@@ -75,9 +75,9 @@ void WaveEffect::_preStep() {
 void PulseEffect::_preStep()
 {
 	int delta = ((step_index > 64) ? (128 - step_index) : step_index) >> 3;
-	for(int iLed = 0; iLed < strip_length; iLed++)
+	for(int iLed = 0; iLed < config->length; iLed++)
 	{
-		leds[iLed].color(color.r >> delta, color.g >> delta, color.b >> delta);
+		config->leds[iLed].color(config->color.r >> delta, config->color.g >> delta, config->color.b >> delta);
 	}
 }
 
