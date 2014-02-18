@@ -15,7 +15,11 @@ void WaveEffect::_preStep() {
 	for(int iLed = 0; iLed < config->length; iLed++)
 	{
 		// y is evolving from 0 to 31
-		y = (iLed + step_index) & 0x1f;
+		if (config->reverse) {
+			y = (iLed + step_index) & 0x1f;
+		} else {
+			y = (iLed - step_index) & 0x1f;
+		}
 		if (y >= 16)
 		{
 			if (y >= 24) // y in 4th cycle
