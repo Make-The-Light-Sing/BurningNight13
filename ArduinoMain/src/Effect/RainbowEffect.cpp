@@ -18,7 +18,7 @@ void RainbowEffect::_preStep()
 		if (config->reverse) {
 			config->leds[iLed].Wheel(((iLed * 384 / config->length) + step_index) % 384);
 		} else {
-			config->leds[config->length - iLed].Wheel(((iLed * 384 / config->length) + step_index) % 384);
+			config->leds[config->length - iLed - 1].Wheel(((iLed * 384 / config->length) + step_index) % 384);
 		}
 	}
 }

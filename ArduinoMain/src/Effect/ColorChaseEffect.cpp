@@ -15,7 +15,7 @@
 void ColorChaseEffect::_preStep()
 {
 	if (config->reverse) {
-		config->leds[config->length - step_index] = config->color;
+		config->leds[config->length - step_index - 1] = config->color;
 	} else {
 		config->leds[step_index] = config->color;
 	}
