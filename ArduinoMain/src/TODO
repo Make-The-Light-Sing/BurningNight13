@@ -1,5 +1,6 @@
-1. Mise en place du capteur à ultrason
+TODO List
+=========
 
-2. Variable couleur par rapport à un capteur
-
-3. Ajouter une config pour attacher une valeur variable au résultat d'un capteur
+- Plug and get data from one single ultra sound sensor
+- Make an effect color variable according to sound sensor value
+- Make a configurable object that can attach a variable value from an abstract sensor to a variable option of an effect  
