@@ -1,5 +1,5 @@
 #include "FastSPI_LED2.h"
-#include "Config.h"
+#include "Config_Prototype.h"
 #include "Effect/EffectFactory.h"
 #include "Color.h"
 
