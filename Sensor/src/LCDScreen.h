@@ -8,6 +8,13 @@
 #ifndef LCDSCREEN_H_
 #define LCDSCREEN_H_
 
+#include <stddef.h>
+#if defined(ARDUINO) && ARDUINO >= 100
+  #include <Arduino.h>
+#else
+  #include <WProgram.h>
+#endif
+
 #include <LiquidCrystal.h>
 
 #define LCD_BTN_RIGHT  0
@@ -20,9 +27,11 @@
 class LCDScreen: public LiquidCrystal
 {
 public:
-    LCDScreen(uint8_t rs, uint8_t enable, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
-    int readButton(int adc_key_in);
+    LCDScreen(uint8_t rs, uint8_t enable, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t btn);
+    int readButton();
     virtual ~LCDScreen();
+protected:
+    uint8_t btn_pin;
 };
 
 #endif /* LCDSCREEN_H_ */

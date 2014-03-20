@@ -13,7 +13,7 @@ HCSR04UltraSonic HCSR04(PIN_TRIG, PIN_ECHO);
  * Instanciate LCD screen
  * @var LiquidCrystal
  */
-LCDScreen lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
+LCDScreen lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7, PIN_LCD_BTN);
 
 /**
  * Is an LCD key pressed or not
@@ -37,7 +37,7 @@ void setup()
 
 void loop()
 {
-    int lcd_key = lcd.readButton(analogRead(PIN_LCD_BTN));
+    int lcd_key = lcd.readButton();
     long cm = readDistance();
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;

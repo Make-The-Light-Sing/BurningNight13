@@ -17,11 +17,10 @@
  * @param uint8_t d6
  * @param uint8_t d7
  */
-LCDScreen::LCDScreen(uint8_t rs, uint8_t enable, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7) :
+LCDScreen::LCDScreen(uint8_t rs, uint8_t enable, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t btn) :
         LiquidCrystal(rs, enable, d4, d5, d6, d7)
 {
-    // TODO Auto-generated constructor stub
-
+    btn_pin = btn;
 }
 
 
@@ -29,9 +28,9 @@ LCDScreen::LCDScreen(uint8_t rs, uint8_t enable, uint8_t d4, uint8_t d5, uint8_t
  * Read the buttons
  * @return int
  */
-int LCDScreen::readButton(int adc_key_in)
+int LCDScreen::readButton()
 {
-    //int adc_key_in = analogRead(0);      // read the value from the sensor
+    int adc_key_in = analogRead(btn_pin);
     // my buttons when read are centered at these valies: 0, 144, 329, 504, 741
     // we add approx 50 to those values and check to see if we are close
     if (adc_key_in > 1000) return LCD_BTN_NONE; // We make this the 1st option for speed reasons since it will be the most likely result
