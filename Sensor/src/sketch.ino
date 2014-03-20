@@ -1,5 +1,4 @@
-//#include <LiquidCrystal.h>
-#include <Ultrasonic.h>
+#include <HCSR04UltraSonic.h>
 
 #include "Config.h"
 #include "LCDScreen.h"
@@ -8,13 +7,12 @@
  * Instanciate ultrasonic sensor
  * @var Ultrasonic
  */
-Ultrasonic HCSR04(PIN_TRIG, PIN_ECHO);
+HCSR04UltraSonic HCSR04(PIN_TRIG, PIN_ECHO);
 
 /**
  * Instanciate LCD screen
  * @var LiquidCrystal
  */
-//LiquidCrystal lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
 LCDScreen lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PIN_LCD_D7);
 
 /**
@@ -39,7 +37,6 @@ void setup()
 
 void loop()
 {
-    //int  lcd_key = read_LCD_buttons();  // read the buttons
     int lcd_key = lcd.readButton(analogRead(PIN_LCD_BTN));
     long cm = readDistance();
 
@@ -83,7 +80,7 @@ int readDistance()
 {
     long cm;
     for (int i = 0; i < 10; i++) {
-        cm = HCSR04.convert(HCSR04.timing(), 1);
+        cm = HCSR04.convert(HCSR04.timing());
         if (cm < 4000) break;
     }
     return cm;
