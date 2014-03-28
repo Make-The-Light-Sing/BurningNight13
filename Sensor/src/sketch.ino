@@ -3,6 +3,11 @@
 #include "Config.h"
 #include "LCDScreen.h"
 
+#include <Wire.h>
+
+//#define DEBUG
+#define SLAVE_ADDRESS 0x10
+
 /**
  * Instanciate ultrasonic sensor
  * @var Ultrasonic
@@ -37,6 +42,9 @@ void setup()
     lcd.print("System started...");
     lcd.setCursor(0, 1);
     lcd.print("Welcome !");
+    Wire.begin(SLAVE_ADDRESS);
+    Wire.onReceive(receiveData);
+    Wire.onRequest(sendData);
 }	// setup()
 
 void loop()
@@ -88,3 +96,16 @@ void loop()
         delay(50);
     }
 }   // loop()
+
+/**
+ * Read data sent by the master
+ * @param int byteCount number of byte received
+ */
+void receiveData(int byteCount){
+}	// receiveData
+
+/**
+ * Send data when it's requested by the master
+ */
+void sendData(){
+}	// sendData
