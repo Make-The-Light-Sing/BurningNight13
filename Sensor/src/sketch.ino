@@ -2,14 +2,10 @@
 
 #include "Config.h"
 #include "LCDScreen.h"
-
 #include <Wire.h>
 
-//#define DEBUG
-#define SLAVE_ADDRESS 0x10
-
 /**
- * Instanciate ultrasonic sensor
+ * Instanciate ultrasonic sensors
  * @var Ultrasonic
  */
 HCSR04UltraSonic HS1(PIN_TRIG_1, PIN_ECHO_1);
@@ -28,7 +24,18 @@ LCDScreen lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PI
  */
 bool keyDown = false;
 
-byte dist1, dist2, dist3 = 0;
+/**
+ * Distance read by each sensor
+ * @var long
+ */
+long dist1, dist2, dist3 = 0;
+
+/**
+ * Identify wich sensor the master want to get data
+ * @var byte
+ */
+byte sensor_to_read = 0;
+
 
 /**
  * Initialize Arduino
@@ -50,11 +57,11 @@ void setup()
 void loop()
 {
     int lcd_key = lcd.readButton();
-    dist1 = constrain(HS1.readDistance(), 0, 255);
+    dist1 = HS1.readDistance();
     delay(10);
-    dist2 = constrain(HS2.readDistance(), 0, 255);
+    dist2 = HS2.readDistance();
     delay(10);
-    dist3 = constrain(HS3.readDistance(), 0, 255);
+    dist3 = HS3.readDistance();
     delay(10);
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;
@@ -93,7 +100,7 @@ void loop()
         lcd.print("3: ");
         lcd.print(dist3);
         lcd.print("cm");
-        delay(50);
+        //delay(50);
     }
 }   // loop()
 
@@ -102,10 +109,25 @@ void loop()
  * @param int byteCount number of byte received
  */
 void receiveData(int byteCount){
+	sensor_to_read = Wire.read();
 }	// receiveData
 
 /**
  * Send data when it's requested by the master
  */
 void sendData(){
+	switch(sensor_to_read) {
+	case 1 :
+		Wire.write(constrain(dist1, 0, 255));
+		break;
+	case 2 :
+		Wire.write(constrain(dist2, 0, 255));
+		break;
+	case 3 :
+		Wire.write(constrain(dist3, 0, 255));
+		break;
+	default :
+		Wire.write(255);
+	}
+	sensor_to_read = 0;
 }	// sendData

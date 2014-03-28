@@ -19,7 +19,7 @@
 #define LCD_NB_ROWS    2
 #define LCD_NB_COLS    16
 
-
+#define SLAVE_ADDRESS 0x10
 
 
 #endif
