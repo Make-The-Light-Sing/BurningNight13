@@ -2,3 +2,4 @@
 .cproject
 ArduinoMain/.build/*
 Sensor/.build/*
+.settings/*
