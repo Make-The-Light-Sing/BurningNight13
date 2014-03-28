@@ -23,6 +23,8 @@ LCDScreen lcd(PIN_LCD_RS, PIN_LCD_ENABLE, PIN_LCD_D4, PIN_LCD_D5, PIN_LCD_D6, PI
  */
 bool keyDown = false;
 
+byte dist1, dist2, dist3 = 0;
+
 /**
  * Initialize Arduino
  * @return void
@@ -34,18 +36,18 @@ void setup()
     lcd.setCursor(0, 0);	// col, row
     lcd.print("System started...");
     lcd.setCursor(0, 1);
-    lcd.print("Welcom !");
+    lcd.print("Welcome !");
 }	// setup()
 
 void loop()
 {
     int lcd_key = lcd.readButton();
-    long cm1 = HS1.readDistance();
-    delay(20);
-    long cm2 = HS2.readDistance();
-    delay(20);
-    long cm3 = HS3.readDistance();
-    delay(20);
+    dist1 = constrain(HS1.readDistance(), 0, 255);
+    delay(10);
+    dist2 = constrain(HS2.readDistance(), 0, 255);
+    delay(10);
+    dist3 = constrain(HS3.readDistance(), 0, 255);
+    delay(10);
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;
     if (lcd_key != LCD_BTN_NONE && !keyDown) {
@@ -75,15 +77,14 @@ void loop()
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("1: ");
-        lcd.print(cm1);
+        lcd.print(dist1);
         lcd.print("cm 2: ");
-        lcd.print(cm2);
+        lcd.print(dist2);
         lcd.print("cm");
         lcd.setCursor(0, 1);
         lcd.print("3: ");
-        lcd.print(cm3);
+        lcd.print(dist3);
         lcd.print("cm");
         delay(50);
     }
 }   // loop()
-
