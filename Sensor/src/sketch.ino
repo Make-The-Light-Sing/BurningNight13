@@ -7,7 +7,9 @@
  * Instanciate ultrasonic sensor
  * @var Ultrasonic
  */
-HCSR04UltraSonic HCSR04(PIN_TRIG, PIN_ECHO);
+HCSR04UltraSonic HS1(PIN_TRIG_1, PIN_ECHO_1);
+HCSR04UltraSonic HS2(PIN_TRIG_2, PIN_ECHO_2);
+HCSR04UltraSonic HS3(PIN_TRIG_3, PIN_ECHO_3);
 
 /**
  * Instanciate LCD screen
@@ -38,7 +40,12 @@ void setup()
 void loop()
 {
     int lcd_key = lcd.readButton();
-    long cm = readDistance();
+    long cm1 = HS1.readDistance();
+    delay(20);
+    long cm2 = HS2.readDistance();
+    delay(20);
+    long cm3 = HS3.readDistance();
+    delay(20);
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;
     if (lcd_key != LCD_BTN_NONE && !keyDown) {
@@ -66,22 +73,17 @@ void loop()
     // if no key pressed display the distance
     if (! keyDown) {
         lcd.clear();
-        lcd.print(cm);
-        lcd.print(" cm.");
+        lcd.setCursor(0, 0);
+        lcd.print("1: ");
+        lcd.print(cm1);
+        lcd.print("cm 2: ");
+        lcd.print(cm2);
+        lcd.print("cm");
+        lcd.setCursor(0, 1);
+        lcd.print("3: ");
+        lcd.print(cm3);
+        lcd.print("cm");
         delay(50);
     }
 }   // loop()
 
-/**
- * Read distance, and exclude extreme measure if possible by making different measures
- * @return long
- */
-int readDistance()
-{
-    long cm;
-    for (int i = 0; i < 10; i++) {
-        cm = HCSR04.convert(HCSR04.timing());
-        if (cm < 4000) break;
-    }
-    return cm;
-}   // readDistance()
