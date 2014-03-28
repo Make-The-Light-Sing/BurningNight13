@@ -22,6 +22,7 @@ public:
     long timing();
     float convert(long microsec);
     virtual ~HCSR04UltraSonic();
+    int readDistance();
 private:
     int _trigPin;
     int _echoPin;

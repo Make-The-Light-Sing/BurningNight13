@@ -53,3 +53,18 @@ float HCSR04UltraSonic::convert(long microsec)
 {
     return microsec / 27.6233 / 2.0;  // CM
 }   // convert
+
+
+/**
+ * Read distance, and exclude extreme measure if possible by making different measures
+ * @return long
+ */
+int HCSR04UltraSonic::readDistance()
+{
+    long cm;
+    for (int i = 0; i < 10; i++) {
+        cm = convert(timing());
+        if (cm < 4000) break;
+    }
+    return cm;
+}   // readDistance()
