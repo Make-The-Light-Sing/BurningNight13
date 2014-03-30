@@ -1,12 +1,12 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#define PIN_TRIG_1     2
-#define PIN_ECHO_1     1
-#define PIN_TRIG_2     11
-#define PIN_ECHO_2     3
-#define PIN_TRIG_3     13
-#define PIN_ECHO_3     12
+#define PIN_TRIG_1     A3
+#define PIN_ECHO_1     2
+#define PIN_TRIG_2     3
+#define PIN_ECHO_2     11
+#define PIN_TRIG_3     12
+#define PIN_ECHO_3     13
 
 #define PIN_LCD_RS     8
 #define PIN_LCD_ENABLE 9
@@ -21,5 +21,8 @@
 
 #define SLAVE_ADDRESS 0x10
 
+#define TRIGGER_TIMEOUT       20000
+#define DELAY_BETWEEN_SENSOR  40
+#define DELAY_BETWEEN_READING 0
 
 #endif

@@ -13,12 +13,13 @@
  * @param int tp Trigger pin number
  * @param int ep Echo pin number
  */
-HCSR04UltraSonic::HCSR04UltraSonic(int tp, int ep)
+HCSR04UltraSonic::HCSR04UltraSonic(byte tp, byte ep, unsigned int timeout)
 {
     pinMode(tp, OUTPUT);
     pinMode(ep, INPUT);
     _trigPin = tp;
     _echoPin = ep;
+    _timeout = timeout;
 }   // HCSR04UltraSonic
 
 /**
@@ -40,7 +41,7 @@ long HCSR04UltraSonic::timing()
     digitalWrite(_trigPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(_trigPin, LOW);
-    return pulseIn(_echoPin, HIGH);
+    return pulseIn(_echoPin, HIGH, _timeout);
 }   // timing
 
 /**

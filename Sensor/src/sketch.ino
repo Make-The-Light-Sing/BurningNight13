@@ -8,9 +8,9 @@
  * Instanciate ultrasonic sensors
  * @var Ultrasonic
  */
-HCSR04UltraSonic HS1(PIN_TRIG_1, PIN_ECHO_1);
-HCSR04UltraSonic HS2(PIN_TRIG_2, PIN_ECHO_2);
-HCSR04UltraSonic HS3(PIN_TRIG_3, PIN_ECHO_3);
+HCSR04UltraSonic HS1(PIN_TRIG_1, PIN_ECHO_1, TRIGGER_TIMEOUT);
+HCSR04UltraSonic HS2(PIN_TRIG_2, PIN_ECHO_2, TRIGGER_TIMEOUT);
+HCSR04UltraSonic HS3(PIN_TRIG_3, PIN_ECHO_3, TRIGGER_TIMEOUT);
 
 /**
  * Instanciate LCD screen
@@ -58,11 +58,11 @@ void loop()
 {
     int lcd_key = lcd.readButton();
     dist1 = HS1.readDistance();
-    delay(10);
+    delay(DELAY_BETWEEN_SENSOR);
     dist2 = HS2.readDistance();
-    delay(10);
+    delay(DELAY_BETWEEN_SENSOR);
     dist3 = HS3.readDistance();
-    delay(10);
+    delay(DELAY_BETWEEN_SENSOR);
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;
     if (lcd_key != LCD_BTN_NONE && !keyDown) {
@@ -100,7 +100,7 @@ void loop()
         lcd.print("3: ");
         lcd.print(dist3);
         lcd.print("cm");
-        //delay(50);
+        delay(DELAY_BETWEEN_READING);
     }
 }   // loop()
 
