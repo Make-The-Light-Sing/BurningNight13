@@ -56,12 +56,17 @@ void setup()
 
 void loop()
 {
+	long read_value = 0;
     int lcd_key = lcd.readButton();
-    dist1 = HS1.readDistance();
+
+    if ((read_value = HS1.readDistance()) > 0)
+    		dist1 = read_value;
     delay(DELAY_BETWEEN_SENSOR);
-    dist2 = HS2.readDistance();
+    if ((read_value = HS2.readDistance()) > 0)
+    		dist2 = read_value;
     delay(DELAY_BETWEEN_SENSOR);
-    dist3 = HS3.readDistance();
+    if ((read_value = HS3.readDistance()) > 0)
+    		dist3 = read_value;
     delay(DELAY_BETWEEN_SENSOR);
 
     if (lcd_key == LCD_BTN_NONE) keyDown = false;
