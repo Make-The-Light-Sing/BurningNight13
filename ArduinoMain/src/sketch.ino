@@ -50,7 +50,14 @@ void loop()
  * Read data sent by the master
  * @param int byteCount number of byte received
  */
-void receiveData(int byteCount){
+void receiveData(int byteCount)
+{
+	// strips 3 & 4
+	byte value_readed = Wire.read();
+	CRGB color;
+	color.Wheel(value_readed);
+	effect[3]->setColor(color);
+	effect[4]->setColor(color);
 }	// receiveData
 
 /**

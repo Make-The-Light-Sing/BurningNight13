@@ -41,6 +41,7 @@ class Effect
 		Effect(T_Effect_Config *config) : config(config), step_loop(config->length) {};
 		void preStep();
 		void postStep();
+		void setColor(CRGB color) { config->color = color; };
 	protected :
 		virtual void _preStep() { config->leds[step_index] = CWhite; };
 		virtual void _postStep() { memset(config->leds, 0x00, config->length * sizeof(CRGB)); };
