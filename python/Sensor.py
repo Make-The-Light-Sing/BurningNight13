@@ -2,11 +2,15 @@
 
 import time
 import smbus
+from ledstrip import Ledstrip
+
 bus = smbus.SMBus(1)
 
 addr_sensor      = 0x10
 addr_strip_left  = 0x20
 addr_strip_right = 0x21
+
+strip_left = Ledstrip(addr_strip_left, True)
 
 
 """ Read values from sensor, this values are retrieved from the Arduino via the i2c bus"""
@@ -31,12 +35,15 @@ def readSensorValues():
     """ Return read values"""
     return [dist_1, dist_2, dist_3]
 
+while True:
+    sensorValues = readSensorValues()
 
-sensorValues = readSensorValues()
+    print "Dist 1 : ", sensorValues[0]
+    print "Dist 2 : ", sensorValues[1]
+    print "Dist 3 : ", sensorValues[2]
 
-print "Dist 1 : ", sensorValues[0]
-print "Dist 2 : ", sensorValues[1]
-print "Dist 3 : ", sensorValues[2]
+    strip_left.sendData(sensorValues)
+    time.sleep(0.1)
 
 #bus.write_byte(addr_strip_left, dist_1)
 
