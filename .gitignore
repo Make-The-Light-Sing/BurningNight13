@@ -4,3 +4,4 @@ ArduinoMain/.build/*
 Sensor/.build/*
 .settings/*
 .pydevproject
+*.pyc
