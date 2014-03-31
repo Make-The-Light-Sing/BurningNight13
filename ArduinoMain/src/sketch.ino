@@ -5,28 +5,35 @@
 #include <Wire.h>
 
 #define SLAVE_ADDRESS 0x20
+#define DEBUG
 
 Effect *effect[NB_SEGMENT];
+int dataReceived = 0;
 
 /**
  *  Setup method
  *  Initialize arduino
  */
-void setup() {
-	EffectFactory factory;
+void setup()
+{
+    EffectFactory factory;
 
-	LED.init();
-	memset(leds, 0x00, NUM_LEDS * sizeof(CRGB));
-	LED.showRGB((byte*)leds, NUM_LEDS);
-	delay(20);
+    LED.init();
+    memset(leds, 0x00, NUM_LEDS * sizeof(CRGB));
+    LED.showRGB((byte*) leds, NUM_LEDS);
+    delay(20);
 
-	for(int i; i < NB_SEGMENT; i++) {
-		effect[i] = factory.createEffect(&config[i]);
-	}
-	config[0].color.Wheel(32);
+    for (int i; i < NB_SEGMENT; i++) {
+        effect[i] = factory.createEffect(&config[i]);
+    }
+    config[0].color.Wheel(32);
     Wire.begin(SLAVE_ADDRESS);
     Wire.onReceive(receiveData);
     Wire.onRequest(sendData);
+    #ifdef DEBUG
+        Serial.begin(9600);
+        Serial.println("Ready...");
+    #endif
 }
 
 /**
@@ -34,16 +41,16 @@ void setup() {
  */
 void loop()
 {
-	// Prepare leds
-	for(int i; i < NB_SEGMENT; i++) {
-		effect[i]->preStep();
-	}
-	// update ledstrip
-	LED.showRGB((byte*)leds, NUM_LEDS);
-	// Make some post traetment like reinitialisation before next step
-	for(int i; i < NB_SEGMENT; i++) {
-		effect[i]->postStep();
-	}
+    // Prepare leds
+    for (int i; i < NB_SEGMENT; i++) {
+        effect[i]->preStep();
+    }
+    // update ledstrip
+    LED.showRGB((byte*) leds, NUM_LEDS);
+    // Make some post traetment like reinitialisation before next step
+    for (int i; i < NB_SEGMENT; i++) {
+        effect[i]->postStep();
+    }
 }
 
 /**
@@ -52,16 +59,31 @@ void loop()
  */
 void receiveData(int byteCount)
 {
-	// strips 3 & 4
-	byte value_readed = Wire.read();
-	CRGB color;
-	color.Wheel(value_readed);
-	effect[3]->setColor(color);
-	effect[4]->setColor(color);
+    dataReceived = byteCount;
+    byte cmd = Wire.read();
+    byte red = Wire.read();
+    byte green = Wire.read();
+    byte blue = Wire.read();
+    CRGB color = { red, green, blue };
+    // test updating strips 3 & 4
+    effect[3]->setColor(color);
+    effect[4]->setColor(color);
+
+    // clear all remaining data
+    while (Wire.available())
+        Wire.read();
+
+    #ifdef DEBUG
+        Serial.print("Received : ");
+        Serial.println(byteCount);
+    #endif
 }	// receiveData
 
 /**
  * Send data when it's requested by the master
  */
-void sendData(){
+void sendData()
+{
+    Wire.write(dataReceived);
+    dataReceived = 0;
 }	// sendData
