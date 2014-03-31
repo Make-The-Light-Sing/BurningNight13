@@ -2,6 +2,9 @@
 #include "Config_Prototype.h"
 #include "Effect/EffectFactory.h"
 #include "Color.h"
+#include <Wire.h>
+
+#define SLAVE_ADDRESS 0x20
 
 Effect *effect[NB_SEGMENT];
 
@@ -21,6 +24,9 @@ void setup() {
 		effect[i] = factory.createEffect(&config[i]);
 	}
 	config[0].color.Wheel(32);
+    Wire.begin(SLAVE_ADDRESS);
+    Wire.onReceive(receiveData);
+    Wire.onRequest(sendData);
 }
 
 /**
@@ -39,3 +45,16 @@ void loop()
 		effect[i]->postStep();
 	}
 }
+
+/**
+ * Read data sent by the master
+ * @param int byteCount number of byte received
+ */
+void receiveData(int byteCount){
+}	// receiveData
+
+/**
+ * Send data when it's requested by the master
+ */
+void sendData(){
+}	// sendData
