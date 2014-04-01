@@ -10,8 +10,7 @@ addr_sensor      = 0x10
 addr_strip_left  = 0x20
 addr_strip_right = 0x21
 
-strip_left = Ledstrip(addr_strip_left, True)
-
+strip_left = Ledstrip(addr_strip_left)
 
 """ Read values from sensor, this values are retrieved from the Arduino via the i2c bus"""
 def readSensorValues():
@@ -37,11 +36,7 @@ def readSensorValues():
 
 while True:
     sensorValues = readSensorValues()
-
-    print "Dist 1 : ", sensorValues[0]
-    print "Dist 2 : ", sensorValues[1]
-    print "Dist 3 : ", sensorValues[2]
-
+    print "Dist : ", sensorValues
     strip_left.sendData(sensorValues)
     time.sleep(0.1)
 

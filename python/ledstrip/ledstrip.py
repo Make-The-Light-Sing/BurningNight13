@@ -13,8 +13,10 @@ class Ledstrip(object):
     def sendData(self, data):
         dataRecieved = 0
         attempt = 0
+        length = len(data) + 2
+        data.insert(0, length)
         if (self.debug):
-            print "Sending datas : ", len(data)
+            print "Sending datas : ", length
         while(True):
             attempt += 1
             try:
@@ -22,10 +24,11 @@ class Ledstrip(object):
                 dataRecieved = bus.read_byte(self.address)
                 if self.debug:
                     print "Recieved : ", dataRecieved
-                if (dataRecieved == len(data) + 1):
+                if (dataRecieved == length):
                     break
             except IOError:
-                print("IOError in writeData")
+                if (self.debug):
+                    print("IOError in writeData")
         if self.debug:
             print "Number of attempt ", attempt
         if attempt > self.max_attempts:
