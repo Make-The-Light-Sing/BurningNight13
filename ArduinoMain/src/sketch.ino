@@ -5,7 +5,7 @@
 #include <Wire.h>
 
 #define SLAVE_ADDRESS 0x20
-#define DEBUG
+//#define DEBUG
 
 Effect *effect[NB_SEGMENT];
 int dataReceived = 0;
@@ -60,7 +60,23 @@ void loop()
 void receiveData(int byteCount)
 {
     dataReceived = byteCount;
-    byte cmd = Wire.read();
+    byte cmd = Wire.read();     // Unused
+    byte length = Wire.read();
+
+    #ifdef DEBUG
+        Serial.print("Received : ");
+        Serial.print(byteCount);
+        Serial.print(" / asserted : ");
+        Serial.println(length);
+    #endif
+
+    if (length != byteCount) {
+        // Error in data, clear buffer and wait for new data
+        while (Wire.available())
+            Wire.read();
+        return;
+    }
+
     byte red = Wire.read();
     byte green = Wire.read();
     byte blue = Wire.read();
@@ -72,11 +88,6 @@ void receiveData(int byteCount)
     // clear all remaining data
     while (Wire.available())
         Wire.read();
-
-    #ifdef DEBUG
-        Serial.print("Received : ");
-        Serial.println(byteCount);
-    #endif
 }	// receiveData
 
 /**
