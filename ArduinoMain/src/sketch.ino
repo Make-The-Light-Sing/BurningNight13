@@ -53,15 +53,30 @@ void loop()
     }
 }
 
+#define CMD_SET_SEGMENT_COLOR 1
+
 /**
  * Read data sent by the master
+ *
+ * Data received are composed like this :
+ * - byte 1 : 0 (used by python library)
+ * - byte 2 : number of bytes composing the message
+ * - byte 3 : command
+ * - byte 4 : index of segment to update
+ * - byte 5 : Red color
+ * - byte 6 : Green color
+ * - byte 7 : Blue color
+ *
+ * List of commands :
+ * - 1 : set color of a segment
+ *
  * @param int byteCount number of byte received
  */
 void receiveData(int byteCount)
 {
     dataReceived = byteCount;
-    byte cmd = Wire.read();     // Unused
-    byte length = Wire.read();
+    byte cmd = Wire.read();     // 1st byte, unused
+    byte length = Wire.read();  // 2nd byte, message length
 
     #ifdef DEBUG
         Serial.print("Received : ");
@@ -70,20 +85,26 @@ void receiveData(int byteCount)
         Serial.println(length);
     #endif
 
+    // Check if message length = number of bytes received
     if (length != byteCount) {
         // Error in data, clear buffer and wait for new data
         while (Wire.available())
             Wire.read();
         return;
     }
+    byte command = Wire.read();
+    byte segment = Wire.read();
+    if (segment >= NB_SEGMENT) segment = NB_SEGMENT -1;
 
-    byte red = Wire.read();
-    byte green = Wire.read();
-    byte blue = Wire.read();
-    CRGB color = { red, green, blue };
-    // test updating strips 3 & 4
-    effect[3]->setColor(color);
-    effect[4]->setColor(color);
+    switch(command) {
+        case CMD_SET_SEGMENT_COLOR:
+            CRGB color;
+            color.r = Wire.read();
+            color.g = Wire.read();
+            color.b = Wire.read();
+            effect[segment]->setColor(color);
+            break;
+    }
 
     // clear all remaining data
     while (Wire.available())
