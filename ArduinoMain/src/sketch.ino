@@ -7,6 +7,8 @@
 #define SLAVE_ADDRESS 0x20
 //#define DEBUG
 
+#define CMD_SET_SEGMENT_COLOR 1
+
 Effect *effect[NB_SEGMENT];
 int dataReceived = 0;
 
@@ -17,7 +19,6 @@ int dataReceived = 0;
 void setup()
 {
     EffectFactory factory;
-
     LED.init();
     memset(leds, 0x00, NUM_LEDS * sizeof(CRGB));
     LED.showRGB((byte*) leds, NUM_LEDS);
@@ -30,6 +31,7 @@ void setup()
     Wire.begin(SLAVE_ADDRESS);
     Wire.onReceive(receiveData);
     Wire.onRequest(sendData);
+
     #ifdef DEBUG
         Serial.begin(9600);
         Serial.println("Ready...");
@@ -53,19 +55,13 @@ void loop()
     }
 }
 
-#define CMD_SET_SEGMENT_COLOR 1
-
 /**
  * Read data sent by the master
  *
  * Data received are composed like this :
  * - byte 1 : 0 (used by python library)
  * - byte 2 : number of bytes composing the message
- * - byte 3 : command
- * - byte 4 : index of segment to update
- * - byte 5 : Red color
- * - byte 6 : Green color
- * - byte 7 : Blue color
+ * - byte 3-n : command
  *
  * List of commands :
  * - 1 : set color of a segment
@@ -74,6 +70,7 @@ void loop()
  */
 void receiveData(int byteCount)
 {
+    byte *message;
     dataReceived = byteCount;
     byte cmd = Wire.read();     // 1st byte, unused
     byte length = Wire.read();  // 2nd byte, message length
@@ -92,24 +89,16 @@ void receiveData(int byteCount)
             Wire.read();
         return;
     }
-    byte command = Wire.read();
-    byte segment = Wire.read();
-    if (segment >= NB_SEGMENT) segment = NB_SEGMENT -1;
 
-    switch(command) {
-        case CMD_SET_SEGMENT_COLOR:
-            CRGB color;
-            color.r = Wire.read();
-            color.g = Wire.read();
-            color.b = Wire.read();
-            effect[segment]->setColor(color);
-            break;
+    message = (byte *) malloc(byteCount - 2);
+    byte i = 0;
+    while (Wire.available()) {
+        message[i] = Wire.read();
+        i++;
     }
-
-    // clear all remaining data
-    while (Wire.available())
-        Wire.read();
-}	// receiveData
+    processMessage(message);
+    free(message);
+}   // receiveData
 
 /**
  * Send data when it's requested by the master
@@ -118,4 +107,34 @@ void sendData()
 {
     Wire.write(dataReceived);
     dataReceived = 0;
-}	// sendData
+}   // sendData
+
+/**
+ * Process recieved messages
+ *
+ * @param byte* message
+ */
+void processMessage(byte* message)
+{
+    switch(message[0]) {
+        case CMD_SET_SEGMENT_COLOR:
+            setSegmentColor(message + 1);
+            break;
+    }
+}   // processMessage
+
+/**
+ * Redefine segment's color
+ *
+ * @param byte* message
+ */
+void setSegmentColor(byte* message)
+{
+    CRGB color;
+    color.r = message[1];
+    color.g = message[2];
+    color.b = message[3];
+    effect[message[0]]->setColor(color);
+}
+
+// */
