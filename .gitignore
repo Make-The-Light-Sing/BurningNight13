@@ -2,6 +2,7 @@
 .cproject
 ArduinoMain/.build/*
 Sensor/.build/*
+StripLeft/.build/*
 .settings/*
 .pydevproject
 *.pyc
