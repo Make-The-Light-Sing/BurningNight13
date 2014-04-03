@@ -31,8 +31,8 @@ class Segment {
         void postStep();
         virtual ~Segment() {};
     protected:
-        virtual void _preStep() { config.leds[step_index] = CWhite; };
-        virtual void _postStep() { memset(config.leds, 0x00, config.length * sizeof(CRGB)); };
+        virtual void _preStep();
+        virtual void _postStep();
         virtual void _endLoop() {};
 };
 
@@ -42,22 +42,10 @@ class SegmentCollection {
         Segment** collection;
 
     public:
-        SegmentCollection() { collection = (Segment**) malloc(0); };
-        void addSegment(Segment *seg) {
-            size++;
-            collection = (Segment**) realloc(collection, size * sizeof(Segment*));
-            collection[size-1] = seg;
-        };
-        void preStep() {
-            for (unsigned int i; i < size; i++) {
-                collection[i]->preStep();
-            }
-        };
-        void postStep() {
-            for (unsigned int i; i < size; i++) {
-                collection[i]->postStep();
-            }
-        };
+        SegmentCollection();
+        void addSegment(Segment *seg);
+        void preStep();
+        void postStep();
         virtual ~SegmentCollection() {};
 };
 

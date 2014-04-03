@@ -13,10 +13,16 @@ SegmentCollection segments;
  */
 void setup()
 {
+    T_Segment_Config config;
     LED.init();
-    T_Segment_Config config = { leds, 90 };
+
+    config = { leds, 90 };
     segments.addSegment(new Segment(config));
-    config = { leds + 90, 90 };
+
+    config = { leds + 90, 45 };
+    segments.addSegment(new Segment(config));
+
+    config = { leds + 135, 45 };
     segments.addSegment(new Segment(config));
 }   // setup
 
@@ -25,9 +31,7 @@ void setup()
  */
 void loop()
 {
-    //main_segment->preStep();
     segments.preStep();
     LED.showRGB((unsigned char *) leds, NUM_LEDS);
-    //main_segment->postStep();
     segments.postStep();
 }   // loop
