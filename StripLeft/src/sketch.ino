@@ -33,9 +33,13 @@ void setup()
  */
 void loop()
 {
+    unsigned long start = millis();
     segments.preStep();
     LED.showRGB((unsigned char *) leds, NUM_LEDS);
     segments.postStep();
+    if (millis() - start < 10) {
+        delay(10);
+    }
 }   // loop
 
 /**
