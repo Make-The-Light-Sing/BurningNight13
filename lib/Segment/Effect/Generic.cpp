@@ -10,6 +10,7 @@
 #include "ColorChase.h"
 #include "Fire.h"
 #include "Pulse.h"
+#include "Rainbow.h"
 #include "Wave.h"
 
 /**
@@ -100,13 +101,13 @@ Effect_Generic* Effect_Factory::createEffect(T_EffectConfig config)
             return new Effect_Pulse(config);
             break;
         }
+        case Rainbow : {
+            return new Effect_Rainbow(config);
+            break;
+        }
         case Wave : {
             return new Effect_Wave(config);
             break;
         }
-        /*case Rainbow : {
-            return new RainbowEffect(config);
-            break;
-        }*/
     }
 }
