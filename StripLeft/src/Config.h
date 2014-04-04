@@ -11,11 +11,18 @@
 
 CRGB leds[NUM_LEDS];
 
-T_Segment_Config seg_config[NB_SEGMENT] = {
-        { leds,       90},
+T_SegmentConfig seg_config[NB_SEGMENT] = {
+        { leds,       180},
         { leds + 10,  90},
         { leds + 90,  45},
         { leds + 100, 80}
     };
+
+T_EffectConfig effect_config[NB_SEGMENT] = {
+        { CWhite, UP },
+        { CRed,   DOWN },
+        { CBlue,  UP },
+        { CGreen, DOWN }
+};
 
 #endif

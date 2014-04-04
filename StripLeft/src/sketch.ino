@@ -1,6 +1,6 @@
 #include <FastSPI_LED2.h>
 #include <Segment.h>
-
+#include <Color.h>
 #include "Config.h"
 
 TM1809Controller800Mhz<PIN_STRIP> LED;
@@ -14,7 +14,7 @@ void setup()
     LED.init();
 
     for(unsigned int i = 0; i < NB_SEGMENT; i++) {
-        segments.addSegment(new Segment(seg_config[i]));
+        segments.addSegment(new Segment(seg_config[i], new Effect_Abstract(effect_config[i])));
     }
 }   // setup
 
