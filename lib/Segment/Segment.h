@@ -32,6 +32,7 @@ class Segment {
         void setEffect(Effect_Generic* eff);
         void preStep();
         void postStep();
+        void init();
         virtual ~Segment() {};
 };
 
@@ -46,6 +47,7 @@ class SegmentCollection {
         Segment* getSegment(unsigned int i);
         void preStep();
         void postStep();
+        void init();
         virtual ~SegmentCollection() {};
 };
 

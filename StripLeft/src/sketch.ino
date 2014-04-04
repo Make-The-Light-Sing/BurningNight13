@@ -17,6 +17,7 @@ void setup()
     for(unsigned int i = 0; i < NB_SEGMENT; i++) {
         segments.addSegment(new Segment(seg_config[i], factory.createEffect(effect_config[i])));
     }
+    segments.init();
 }   // setup
 
 /**

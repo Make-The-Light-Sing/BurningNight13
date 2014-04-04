@@ -49,6 +49,16 @@ void Segment::postStep()
 }   // postStep
 
 /**
+ * Init segment
+ */
+void Segment::init()
+{
+    if (has_effect) {
+        effect->init();
+    }
+}   // init
+
+/**
  * Default constructor
  */
 SegmentCollection::SegmentCollection()
@@ -94,3 +104,13 @@ void SegmentCollection::postStep()
         collection[i]->postStep();
     }
 }   // postStep
+
+/**
+ * Init all segment
+ */
+void SegmentCollection::init()
+{
+    for (unsigned int i; i < size; i++) {
+        collection[i]->init();
+    }
+}   // init

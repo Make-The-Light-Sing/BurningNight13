@@ -41,7 +41,6 @@ Effect_Generic::~Effect_Generic()
 void Effect_Generic::setSegment(Segment* s)
 {
     segment = s;
-    step_loop = segment->config.length;
 }
 
 /**
@@ -71,6 +70,14 @@ void Effect_Generic::setColor(CRGB color)
 {
     config.color = color;
 }
+
+/**
+ * Init effect
+ */
+void Effect_Generic::init()
+{
+    step_loop = segment->config.length;
+}   // init
 
 /**
  * Effect factory

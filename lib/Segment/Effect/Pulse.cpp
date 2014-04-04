@@ -8,6 +8,14 @@
 #include "Pulse.h"
 
 /**
+ * Init pulse effect with fixed loop size
+ */
+void Effect_Pulse::init()
+{
+    step_loop = 128;
+}   // init
+
+/**
  * Pulse effect step
  */
 void Effect_Pulse::_preStep()
