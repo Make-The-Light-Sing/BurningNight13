@@ -10,7 +10,7 @@
 /**
  * Constructor
  */
-Segment::Segment(T_SegmentConfig config, Effect_Abstract* effect)
+Segment::Segment(T_SegmentConfig config, Effect_Generic* effect)
     : config(config), effect(effect), step_loop(config.length)
 {
     effect->setSegment(this);
@@ -20,7 +20,7 @@ Segment::Segment(T_SegmentConfig config, Effect_Abstract* effect)
 /**
  * Define new effect on segment
  */
-void Segment::setEffect(Effect_Abstract* eff)
+void Segment::setEffect(Effect_Generic* eff)
 {
     free(effect);
     effect = eff;

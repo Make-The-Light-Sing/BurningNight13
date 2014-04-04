@@ -8,6 +8,8 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#include <Color.h>
+
 typedef unsigned char boolean;
 
 /**
@@ -22,8 +24,19 @@ typedef struct T_SegmentConfig {
  * Define type for effect direction
  */
 typedef enum E_Direction {
-    UP   = 0,
-    DOWN = 1
+    UP   = 1,
+    DOWN = 2
+};
+
+/**
+ * Define the type of effect enum list
+ */
+typedef enum E_Effect {
+    Color_Chase = 1,
+    //Wave        = 2,
+    Pulse       = 3,
+    //Rainbow     = 4,
+    //Fire        = 5
 };
 
 /**
@@ -32,13 +45,7 @@ typedef enum E_Direction {
 typedef struct T_EffectConfig {
     CRGB        color;
     E_Direction direction;
+    E_Effect    type;
 };
-
-/**
- * Simple declaration for cross includes
- */
-class Segment;
-class Effect_Abstract;
-
 
 #endif /* TYPES_H_ */

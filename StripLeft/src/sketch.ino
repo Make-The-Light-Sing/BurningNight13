@@ -11,10 +11,11 @@ SegmentCollection segments;
  */
 void setup()
 {
+    Effect_Factory factory;
     LED.init();
 
     for(unsigned int i = 0; i < NB_SEGMENT; i++) {
-        segments.addSegment(new Segment(seg_config[i], new Effect_Abstract(effect_config[i])));
+        segments.addSegment(new Segment(seg_config[i], factory.createEffect(effect_config[i])));
     }
 }   // setup
 

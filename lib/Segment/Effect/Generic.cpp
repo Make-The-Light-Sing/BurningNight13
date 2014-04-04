@@ -1,16 +1,17 @@
 /*
- * Abstract.cpp
+ * Generic.cpp
  *
  *  Created on: 4 avr. 2014
  *      Author: jeckel
  */
 
-#include "Abstract.h"
+#include "Generic.h"
+#include "Pulse.h"
 
 /**
  * Empty constructor
  */
-Effect_Abstract::Effect_Abstract()
+Effect_Generic::Effect_Generic()
 {
     /* remove warnings */
     segment = (Segment*) malloc(0);
@@ -19,7 +20,7 @@ Effect_Abstract::Effect_Abstract()
 /**
  * Main constructor
  */
-Effect_Abstract::Effect_Abstract(T_EffectConfig config)
+Effect_Generic::Effect_Generic(T_EffectConfig config)
     : config(config)
 {
     /* remove warnings */
@@ -29,14 +30,14 @@ Effect_Abstract::Effect_Abstract(T_EffectConfig config)
 /**
  * Destructor
  */
-Effect_Abstract::~Effect_Abstract()
+Effect_Generic::~Effect_Generic()
 {
 }
 
 /**
  * Define segment on which the effect should apply
  */
-void Effect_Abstract::setSegment(Segment* s)
+void Effect_Generic::setSegment(Segment* s)
 {
     segment = s;
     step_loop = segment->config.length;
@@ -45,7 +46,7 @@ void Effect_Abstract::setSegment(Segment* s)
 /**
  * Start of step
  */
-void Effect_Abstract::preStep()
+void Effect_Generic::preStep()
 {
     _preStep();
 }
@@ -54,7 +55,7 @@ void Effect_Abstract::preStep()
 /**
  * End of step
  */
-void Effect_Abstract::postStep() {
+void Effect_Generic::postStep() {
     _postStep();
     step_index ++;
     if (step_index >= step_loop) {
@@ -66,7 +67,7 @@ void Effect_Abstract::postStep() {
 /**
  * Redefine color
  */
-void Effect_Abstract::setColor(CRGB color)
+void Effect_Generic::setColor(CRGB color)
 {
     config.color = color;
 }
@@ -74,7 +75,7 @@ void Effect_Abstract::setColor(CRGB color)
 /**
  * Overridable pre-step actions
  */
-void Effect_Abstract::_preStep()
+void Effect_Generic::_preStep()
 {
     if (config.direction == DOWN) {
         segment->config.leds[segment->config.length - step_index - 1] = config.color;
@@ -87,8 +88,36 @@ void Effect_Abstract::_preStep()
 /**
  * Overridable post-step actions
  */
-void Effect_Abstract::_postStep()
+void Effect_Generic::_postStep()
 {
     memset(segment->config.leds, 0x00, segment->config.length * sizeof(CRGB));
 }
 
+/**
+ * Effect factory
+ */
+Effect_Generic* Effect_Factory::createEffect(T_EffectConfig config)
+{
+    switch(config.type) {
+        case Color_Chase : {
+            return new Effect_Generic(config);
+            break;
+        }
+        /*case Wave : {
+            return new WaveEffect(config);
+            break;
+        }*/
+        case Pulse : {
+            return new Effect_Pulse(config);
+            break;
+        }
+        /*case Rainbow : {
+            return new RainbowEffect(config);
+            break;
+        }*/
+        /*case Fire : {
+            return new FireEffect(config);
+            break;
+        }*/
+    }
+}

@@ -10,7 +10,9 @@
 
 #include <Color.h>
 #include "Types.h"
-#include "Effect/Abstract.h"
+#include "Effect/Generic.h"
+
+class Effect_Generic;
 
 class Segment {
         /* properties */
@@ -19,15 +21,15 @@ class Segment {
     protected:
         uint16_t         step_loop    = 0;
         uint16_t         step_index   = 0;
-        Effect_Abstract* effect;
+        Effect_Generic* effect;
         boolean          has_effect = false;
 
         /* methods */
     public:
-        Segment() { /* remove warnings */ effect = (Effect_Abstract*) malloc(0); };
-        Segment(T_SegmentConfig config) : config(config), step_loop(config.length) { /* remove warnings */ effect = (Effect_Abstract*) malloc(0); };
-        Segment(T_SegmentConfig config, Effect_Abstract* effect);
-        void setEffect(Effect_Abstract* eff);
+        Segment() { /* remove warnings */ effect = (Effect_Generic*) malloc(0); };
+        Segment(T_SegmentConfig config) : config(config), step_loop(config.length) { /* remove warnings */ effect = (Effect_Generic*) malloc(0); };
+        Segment(T_SegmentConfig config, Effect_Generic* effect);
+        void setEffect(Effect_Generic* eff);
         void preStep();
         void postStep();
         virtual ~Segment() {};

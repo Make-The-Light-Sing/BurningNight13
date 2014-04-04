@@ -1,18 +1,20 @@
 /*
- * Abstract.h
+ * Generic.h
  *
  *  Created on: 4 avr. 2014
  *      Author: jeckel
  */
 
-#ifndef ABSTRACT_H_
-#define ABSTRACT_H_
+#ifndef GENERIC_H_
+#define GENERIC_H_
 
 #include <Color.h>
 #include "../Types.h"
 #include "../Segment.h"
 
-class Effect_Abstract {
+class Segment;
+
+class Effect_Generic {
         /* properties */
     protected :
         T_EffectConfig  config;
@@ -22,9 +24,9 @@ class Effect_Abstract {
 
         /* methods */
     public:
-        Effect_Abstract();
-        Effect_Abstract(T_EffectConfig config);
-        virtual ~Effect_Abstract();
+        Effect_Generic();
+        Effect_Generic(T_EffectConfig config);
+        virtual ~Effect_Generic();
         void setSegment(Segment* s);
         void preStep();
         void postStep();
@@ -36,4 +38,10 @@ class Effect_Abstract {
 
 };
 
-#endif /* ABSTRACT_H_ */
+class Effect_Factory {
+        /* methods */
+    public:
+        Effect_Generic* createEffect(T_EffectConfig config);
+};
+
+#endif /* GENERIC_H_ */
