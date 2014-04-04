@@ -34,9 +34,9 @@ typedef struct CRGB
 {
 	// Byte order can not be changed as it is the order it will be sent to the LED strip,
 	// The controller is plugged with this order Blue, Red, Green (chinese stuff..)
-	byte b;
-	byte r;
-	byte g;
+	unsigned char b;
+	unsigned char r;
+	unsigned char g;
 
 	// Inline operator to set all colors with an RGB word
 	inline uint32_t operator= (uint32_t c) {
@@ -47,7 +47,7 @@ typedef struct CRGB
 	}
 
 	// Method to define colors in the usual order : Red, Green, Blue
-	void color(byte n_r, byte n_g, byte n_b) {
+	void color(unsigned char n_r, unsigned char n_g, unsigned char n_b) {
 		r = n_r;
 		g = n_g;
 		b = n_b;
@@ -78,7 +78,7 @@ typedef struct CRGB
 	}
 
 	// Method to define color from the Fire palette defined upper, and stored directly in Flash Memory
-	byte fireColor(byte x)
+	unsigned char fireColor(unsigned char x)
 	{
 	    if (x > 128) x = 128;
 	    r = pgm_read_byte_near(fireColorPalette + x * 3 + 1);
