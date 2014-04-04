@@ -7,12 +7,13 @@
 #define NUM_LEDS      180
 #define PIN_STRIP     6
 
-#define NB_SEGMENT  4
+#define NB_SEGMENT  5
 
 CRGB leds[NUM_LEDS];
 
 T_SegmentConfig seg_config[NB_SEGMENT] = {
-        { leds,       90},
+        { leds,       45},
+        { leds + 45,  45},
         { leds + 90,  90},
         { leds,       180},
         { leds,       180}
@@ -20,6 +21,7 @@ T_SegmentConfig seg_config[NB_SEGMENT] = {
 
 T_EffectConfig effect_config[NB_SEGMENT] = {
         { CRed,   DOWN, Pulse },
+        { CRed,   UP,   Fire },
         { CBlue,  UP,   Wave },
         { CGreen, DOWN, Color_Chase },
         { CWhite, UP,   Color_Chase }
