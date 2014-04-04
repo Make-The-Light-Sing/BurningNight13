@@ -33,10 +33,6 @@ class Segment {
         void preStep();
         void postStep();
         virtual ~Segment() {};
-    protected:
-        virtual void _preStep();
-        virtual void _postStep();
-        virtual void _endLoop() {};
 };
 
 class SegmentCollection {

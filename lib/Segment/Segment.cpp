@@ -35,8 +35,6 @@ void Segment::preStep()
 {
     if (has_effect) {
         effect->preStep();
-    } else {
-        _preStep();
     }
 }   // preStep
 
@@ -47,31 +45,8 @@ void Segment::postStep()
 {
     if (has_effect) {
         effect->postStep();
-    } else {
-        _postStep();
-        step_index ++;
-        if (step_index >= step_loop) {
-            step_index = 0;
-            _endLoop();
-        }
     }
 }   // postStep
-
-/**
- * Default pre-step
- */
-void Segment::_preStep()
-{
-    config.leds[step_index] = CWhite;
-};
-
-/**
- * Default post-step
- */
-void Segment::_postStep()
-{
-    memset(config.leds, 0x00, config.length * sizeof(CRGB));
-};
 
 /**
  * Default constructor
