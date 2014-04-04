@@ -9,28 +9,8 @@
 #define ABSTRACT_H_
 
 #include <Color.h>
+#include "../Types.h"
 #include "../Segment.h"
-
-/**
- * Define type for effect direction
- */
-typedef enum E_Direction {
-    UP   = 0,
-    DOWN = 1
-};
-
-/**
- * Define the effect configuration structure
- */
-typedef struct T_EffectConfig {
-    CRGB        color;
-    E_Direction direction;
-};
-
-/**
- * Simple declaration for cross includes
- */
-class Segment;
 
 class Effect_Abstract {
         /* properties */

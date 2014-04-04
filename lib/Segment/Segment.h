@@ -9,19 +9,8 @@
 #define SEGMENT_H_
 
 #include <Color.h>
+#include "Types.h"
 #include "Effect/Abstract.h"
-
-/**
- * Define the effect configuration structure
- */
-typedef struct T_SegmentConfig {
-    CRGB*         leds;
-    uint16_t      length;
-};
-
-typedef unsigned char boolean;
-
-class Effect_Abstract;
 
 class Segment {
         /* properties */
