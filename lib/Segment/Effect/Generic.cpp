@@ -11,6 +11,7 @@
 #include "Fire.h"
 #include "Pulse.h"
 #include "Rainbow.h"
+#include "Spark.h"
 #include "Wave.h"
 
 /**
@@ -103,6 +104,10 @@ Effect_Generic* Effect_Factory::createEffect(T_EffectConfig config)
         }
         case Rainbow : {
             return new Effect_Rainbow(config);
+            break;
+        }
+        case Spark : {
+            return new Effect_Spark(config);
             break;
         }
         case Wave : {

@@ -26,7 +26,7 @@ T_EffectConfig effect_config[NB_SEGMENT] = {
         { CBlue,  UP,   Wave },
         { CBlue,  DOWN, Rainbow},
         { CGreen, DOWN, Color_Chase },
-        { CWhite, UP,   Color_Chase }
+        { CWhite, UP,   Spark }
 };
 
 #endif

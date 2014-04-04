@@ -10,8 +10,6 @@
 
 #include <Color.h>
 
-typedef unsigned char boolean;
-
 /**
  * Define the effect configuration structure
  */
@@ -33,10 +31,11 @@ typedef enum E_Direction {
  */
 typedef enum E_Effect {
     Color_Chase = 1,
-    Wave        = 2,
+    Fire        = 2,
     Pulse       = 3,
     Rainbow     = 4,
-    Fire        = 5
+    Spark       = 5,
+    Wave        = 6
 };
 
 /**
