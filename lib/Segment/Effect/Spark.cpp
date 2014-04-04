@@ -20,5 +20,12 @@ Effect_Spark::Effect_Spark(T_EffectConfig config)
  */
 void Effect_Spark::_preStep()
 {
-    segment->config.leds[random(segment->config.length)] = config.color;
-}
+    position = random(segment->config.length);
+    last_color = segment->config.leds[position];
+    segment->config.leds[position] = config.color;
+}   // _preStep
+
+void Effect_Spark::_postStep()
+{
+    segment->config.leds[position] = last_color;
+}   // _postStep
