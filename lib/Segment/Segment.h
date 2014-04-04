@@ -11,17 +11,19 @@
 #include <Color.h>
 #include "Types.h"
 #include "Effect/Generic.h"
+#include "MessageProcessor.h"
 
 class Effect_Generic;
+class MessageProcessor;
 
 class Segment {
         /* properties */
     public:
-        T_SegmentConfig config;
+        T_SegmentConfig  config;
+        Effect_Generic*  effect;
     protected:
         uint16_t         step_loop    = 0;
         uint16_t         step_index   = 0;
-        Effect_Generic* effect;
         boolean          has_effect = false;
 
         /* methods */
@@ -37,17 +39,22 @@ class Segment {
 };
 
 class SegmentCollection {
+        /* properties */
     protected:
         unsigned int size = 0;
         Segment** collection;
+        MessageProcessor* processor;
 
+        /* methods */
     public:
         SegmentCollection();
-        void addSegment(Segment *seg);
+        void addSegment(Segment* seg);
         Segment* getSegment(unsigned int i);
         void preStep();
         void postStep();
         void init();
+        void processMessage(byte* message);
+        void setSegmentColor(unsigned int index, CRGB color);
         virtual ~SegmentCollection() {};
 };
 

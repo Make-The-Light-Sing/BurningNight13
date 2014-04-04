@@ -8,6 +8,8 @@
 TM1809Controller800Mhz<PIN_STRIP> LED;
 SegmentCollection segments;
 
+unsigned char dataReceived = 0;
+
 /**
  * Initialize
  */
@@ -41,6 +43,27 @@ void loop()
  */
 void receiveData(int byteCount)
 {
+    byte *message;
+    dataReceived = byteCount;
+    byte cmd = Wire.read();     // 1st byte, unused
+    byte length = Wire.read();  // 2nd byte, message length
+
+    // Check if message length = number of bytes received
+    if (length != byteCount) {
+        // Error in data, clear buffer and wait for new data
+        while (Wire.available())
+            Wire.read();
+        return;
+    }
+
+    message = (byte *) malloc(byteCount - 2);
+    byte i = 0;
+    while (Wire.available()) {
+        message[i] = Wire.read();
+        i++;
+    }
+    segments.processMessage(message);
+    free(message);
 }   // receiveData
 
 /**
@@ -48,4 +71,6 @@ void receiveData(int byteCount)
  */
 void sendData()
 {
+    Wire.write(dataReceived);
+    dataReceived = 0;
 }   // sendData

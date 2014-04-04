@@ -16,8 +16,9 @@ class Segment;
 
 class Effect_Generic {
         /* properties */
-    protected :
+    public:
         T_EffectConfig  config;
+    protected :
         Segment*        segment;
         uint16_t        step_index = 0;
         uint16_t        step_loop    = 0;

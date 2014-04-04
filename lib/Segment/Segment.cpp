@@ -64,6 +64,7 @@ void Segment::init()
 SegmentCollection::SegmentCollection()
 {
     collection = (Segment**) malloc(0);
+    processor = new MessageProcessor(this);
 }   // SegmentCollection
 
 /**
@@ -114,3 +115,19 @@ void SegmentCollection::init()
         collection[i]->init();
     }
 }   // init
+
+/**
+ * Process received message
+ */
+void SegmentCollection::processMessage(byte* message)
+{
+    processor->processMessage(message);
+}   // processMessage
+
+/**
+ * Change color of a defined segment
+ */
+void SegmentCollection::setSegmentColor(unsigned int index, CRGB color)
+{
+    collection[index]->effect->config.color = color;
+}   // setSegmentColor
