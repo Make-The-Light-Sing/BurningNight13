@@ -6,8 +6,10 @@
  */
 
 #include "Generic.h"
-#include "Pulse.h"
+
 #include "ColorChase.h"
+#include "Pulse.h"
+#include "Wave.h"
 
 /**
  * Empty constructor
@@ -89,12 +91,12 @@ Effect_Generic* Effect_Factory::createEffect(T_EffectConfig config)
             return new Effect_ColorChase(config);
             break;
         }
-        /*case Wave : {
-            return new WaveEffect(config);
-            break;
-        }*/
         case Pulse : {
             return new Effect_Pulse(config);
+            break;
+        }
+        case Wave : {
+            return new Effect_Wave(config);
             break;
         }
         /*case Rainbow : {

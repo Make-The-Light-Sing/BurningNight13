@@ -12,15 +12,15 @@
 CRGB leds[NUM_LEDS];
 
 T_SegmentConfig seg_config[NB_SEGMENT] = {
-        { leds,       180},
-        { leds + 90,  45},
+        { leds,       90},
+        { leds + 90,  90},
         { leds,       180},
         { leds,       180}
     };
 
 T_EffectConfig effect_config[NB_SEGMENT] = {
         { CRed,   DOWN, Pulse },
-        { CBlue,  UP,   Color_Chase },
+        { CBlue,  UP,   Wave },
         { CGreen, DOWN, Color_Chase },
         { CWhite, UP,   Color_Chase }
 };

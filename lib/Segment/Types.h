@@ -33,10 +33,10 @@ typedef enum E_Direction {
  */
 typedef enum E_Effect {
     Color_Chase = 1,
-    //Wave        = 2,
+    Wave        = 2,
     Pulse       = 3,
-    //Rainbow     = 4,
-    //Fire        = 5
+    Rainbow     = 4,
+    Fire        = 5
 };
 
 /**
