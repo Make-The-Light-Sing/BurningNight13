@@ -32,10 +32,9 @@ class Effect_Generic {
         void postStep();
         void setColor(CRGB color);
     protected :
-        virtual void _preStep();
-        virtual void _postStep();
+        virtual void _preStep() {};
+        virtual void _postStep() {};
         virtual void _endLoop() {};
-
 };
 
 class Effect_Factory {

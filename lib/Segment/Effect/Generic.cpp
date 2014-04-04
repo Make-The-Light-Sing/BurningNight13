@@ -7,6 +7,7 @@
 
 #include "Generic.h"
 #include "Pulse.h"
+#include "ColorChase.h"
 
 /**
  * Empty constructor
@@ -51,7 +52,6 @@ void Effect_Generic::preStep()
     _preStep();
 }
 
-
 /**
  * End of step
  */
@@ -73,34 +73,13 @@ void Effect_Generic::setColor(CRGB color)
 }
 
 /**
- * Overridable pre-step actions
- */
-void Effect_Generic::_preStep()
-{
-    if (config.direction == DOWN) {
-        segment->config.leds[segment->config.length - step_index - 1] = config.color;
-    } else {
-        segment->config.leds[step_index] = config.color;
-    }
-    //segment->config.leds[step_index] = config.color;
-}
-
-/**
- * Overridable post-step actions
- */
-void Effect_Generic::_postStep()
-{
-    memset(segment->config.leds, 0x00, segment->config.length * sizeof(CRGB));
-}
-
-/**
  * Effect factory
  */
 Effect_Generic* Effect_Factory::createEffect(T_EffectConfig config)
 {
     switch(config.type) {
         case Color_Chase : {
-            return new Effect_Generic(config);
+            return new Effect_ColorChase(config);
             break;
         }
         /*case Wave : {
